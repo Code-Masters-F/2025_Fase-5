@@ -1,5 +1,6 @@
 package br.com.fiap.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class ContaCliente extends Conta {
     // esse id precisa ser automatizado, pois quem recebe é a carteira
     private static int proximoId = 1;
 
+    // Contrutor para criação, para futura inserção no banco
     public ContaCliente(String numeroConta, String agencia, Cliente cliente, int id) {
         super(numeroConta, agencia, id);
         this.cliente = cliente;
@@ -22,6 +24,22 @@ public class ContaCliente extends Conta {
         this.transacoesCryptos = new ArrayList<>();
         this.transacoesContas = new ArrayList<>();
         this.carteira = new Carteira(this, proximoId++);
+    }
+
+    // Construtor para ler do Banco de dados
+    public ContaCliente(int idConta, Cliente cliente, String numeroConta, String agencia, LocalDate dataAbertura,
+                        Carteira carteira, List<TransacaoCrypto> transacoesCryptos, List<TransacaoConta> transacoesContas) {
+        super(numeroConta, agencia, idConta, dataAbertura);
+
+        // usar o ClienteDao dentro do ContaClienteDao para ler o cliente e passar para este construtor
+        this.cliente = cliente;
+
+        // mesma coisa, usar CarteiraDao para achar no banco contruir o objeto e mandar para esse construtor
+        this.carteira = carteira;
+
+        // Listar as transações do banco dessa conta em List e passar para esse construtor
+        this.transacoesCryptos = transacoesCryptos;
+        this.transacoesContas = transacoesContas;
     }
 
     @Override

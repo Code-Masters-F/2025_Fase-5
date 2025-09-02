@@ -8,11 +8,20 @@ public abstract class Conta {
     private final String agencia;
     private final LocalDate dataAbertura;
 
+    // Construtor de criação, para futura inserção no banco
     public Conta(String numeroConta, String agencia, int id) {
         this.numeroConta = numeroConta;
         this.agencia = agencia;
         this.dataAbertura = LocalDate.now();
         this.id = id;
+    }
+
+    // Construtor para leitura do banco
+    public Conta(String numeroConta, String agencia, int id, LocalDate dataAbertura) {
+        this.numeroConta = numeroConta;
+        this.agencia = agencia;
+        this.id = id;
+        this.dataAbertura = dataAbertura;
     }
 
     public String getNumeroConta() {
